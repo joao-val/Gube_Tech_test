@@ -5,6 +5,7 @@ import com.joaoval.gubee.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -17,7 +18,8 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping
-    public List<Product> getAll(){
-        return service.getAll();
+    public List<Product> getAll(@RequestParam(required = false) List<String> stack,
+                                @RequestParam(required = false) List<String> targetMarket){
+        return service.getAll(stack, targetMarket);
     }
 }
