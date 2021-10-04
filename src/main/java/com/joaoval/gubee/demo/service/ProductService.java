@@ -16,8 +16,18 @@ public class ProductService {
 
     public List<Product> getAll(List<String> stack, List<String> targetMarket) {
         List<Product> products = productRepository.findAll();
-        return products.stream().filter(
-                product -> product.getStack().stream().anyMatch(stack::contains)||
-                        product.getTargetMarket().stream().anyMatch(targetMarket::contains)).collect(Collectors.toList());
+
+        if (stack != null && targetMarket != null){
+            return products.stream().filter(
+                    product -> product.getStack().stream().anyMatch(stack::contains)||
+                            product.getTargetMarket().stream().anyMatch(targetMarket::contains)).collect(Collectors.toList());
+        } else if (stack == null && targetMarket != null) {
+            return products.stream().filter(
+                    product -> product.getTargetMarket().stream().anyMatch(targetMarket::contains)).collect(Collectors.toList());
+        } else if(stack != null){
+            return products.stream().filter(
+                    product -> product.getStack().stream().anyMatch(stack::contains)).collect(Collectors.toList());
+        }
+        return products;
     }
 }
